@@ -1,0 +1,73 @@
+<p>agregar works!</p>
+<div class="container">
+    <form [formGroup]="fomularioCreado">
+        <div class="form-group">
+            <label >Nombre</label>
+            <input type="text" class="form-control" formControlName="nombre">
+                <div class="alert alert-info" role="alert"  *ngIf="fomularioCreado.controls['nombre'].dirty && fomularioCreado.controls['nombre'].invalid ">
+                    El nombre es requerido
+                </div>
+                
+        </div>
+        <div class="form-group">
+            <label >Correo</label>
+            <input type="text" class="form-control" formControlName="correo">
+                <div  *ngIf="fomularioCreado.controls['correo'].dirty && fomularioCreado.controls  ['correo'].invalid"> 
+
+                    <div class="alert alert-info" role="alert" *ngIf="fomularioCreado.controls['correo'].errors.required">
+                        El correo es requerido
+                    </div>
+
+                    <div class="alert alert-info" role="alert" *ngIf="fomularioCreado.controls['correo'].errors.email">
+                        No parece un formato valido
+                    </div>
+
+                </div>
+        </div>
+        <div class="form-group">
+            <label >Contraseña</label>
+            <input type="password" class="form-control" formControlName="password">
+                
+                <div *ngIf="fomularioCreado.controls['password'].invalid && fomularioCreado.controls['password'].dirty"> 
+
+                    <div class="alert alert-info" role="alert" *ngIf="fomularioCreado.controls['password'].errors.required">
+                        La contraseña es requerida
+                    </div>
+
+                    <div class="alert alert-info" role="alert" *ngIf="fomularioCreado.controls['password'].errors.minlength">
+                        La contraseña debe tener al menos 8 caracteres
+                    </div>
+
+                </div>
+        </div>
+        <button *ngIf="esNuevo" [disabled]="!fomularioCreado.valid" class="btn btn-success" (click)="agregar()">Agregar</button>
+        <button *ngIf="!esNuevo"[disabled]="!fomularioCreado.valid" class="btn btn-warning" (click)="editar()">Editar</button>
+    </form>
+</div>
+
+<!-- <div> {{fomularioCreado.valid}}</div>
+
+<div class="container">
+    {{ fomularioCreado.value | json }}
+</div> -->
+<!-- <div>
+    {{fomularioCreado.controls['nombre'].dirty}}
+    <p> {{fomularioCreado.controls['nombre'].invalid}}</p>
+</div> -->
+
+<!-- <div class="container" *ngFor="let usuario of usuarios">
+    <p>  </p>
+    <p> </p>
+    <p> La contraseña del usuario es: {{usuario.password}}</p>
+
+
+</div> -->
+<div class="container">
+<ul class="list-group list-group-horizontal" class="container" *ngFor="let usuario of usuarios; let posicionEditar=index">
+    <li class="list-group-item">El nombre del usuario es: {{usuario.nombre}} </li>
+    <li class="list-group-item">El correo del usuario es: {{usuario.correo}}</li>
+    <li class="list-group-item">La contraseña del usuario es: {{usuario.password}}</li>
+    <button class="btn btn-warning" (click)="editarUsuario(posicionEditar)">Editar Informacion</button>
+    <button class="btn btn-warning" (click)="eliminarUsuario(posicionEditar)">Eliminar Informacion</button>
+</ul>
+</div>
